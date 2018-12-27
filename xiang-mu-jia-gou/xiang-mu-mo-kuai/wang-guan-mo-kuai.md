@@ -10,7 +10,7 @@
 |    |     |_ org.inklabsfoundation.inkapps     
 |    |            |
 |    |            |
-|    |            |__ aop.logging    用于记录服务日志
+|    |            |__ aop.logging    记录服务日志
 |    |            |
 |    |            |
 |    |            |__ config    配置类    
@@ -26,20 +26,22 @@
 |    |            |     |_ ApplicationProperties    用来读取该模块在参配中心的 application 数据，使用 setter/getter 来获取。
 |    |            |     |_ AsyncConfiguration    异步任务线程池配置    
 |    |            |     |_ CacheConfiguration    缓存配置
-|    |            |     |_ CloudDatabaseConfiguration    Cloud数据库配置
-|    |            |     |_ Constants     配置项目常量
+|    |            |     |_ CloudDatabaseConfiguration    Cloud 数据库配置
+|    |            |     |_ ClusterConfigurationPropertie     Redis集群属性
+|    |            |     |_ ClusterRedisConfiguration         Redis Cluster 配置
+|    |            |     |_ Constants     配置项目常量 （email、mobile 正则，redis key 头部，sms、email 模板名字，kyc 返回值）
 |    |            |     |_ DatabaseConfiguration    数据库配置，liquibase 读取 masste.xml 文件，进行校验。
 |    |            |     |_ DateTimeFormatConfiguration    日期格式化配置，此处可以自定义 Converter
 |    |            |     |_ DefaultProfileUtil    默认属性文件工具
-|    |            |     |_ GatewayConfiguration    Gateway Swagger 配置
+|    |            |     |_ GatewayConfiguration    Gateway Swagger、API Filter 访问过滤、API 访问速率配置
 |    |            |     |_ JacksonConfiguration    json 配置
-|    |            |     |_ LocaleConfiguration
-|    |            |     |_ LoggingAspectConfiguration    
-|    |            |     |_ LoggingConfiguration    
+|    |            |     |_ LocaleConfiguration     系统环境变量、application、boostrap 等 yml 属性文件配置
+|    |            |     |_ LoggingAspectConfiguration     LoggingAspect 配置   
+|    |            |     |_ LoggingConfiguration    logstash 配置
 |    |            |     |_ MetricsConfiguration    监控配置 
 |    |            |     |_ MicroserviceSecurityConfiguration    oauth2资源适配器，crsf权限配置、接口权限配置、401状态码返回配置
-|    |            |     |_ RedisConfiguration    redis 配置
-|    |            |     |_ ThymeleafConfiguration    thymeleaf 配置
+|    |            |     |_ RedisConfiguration    redis signle 配置
+|    |            |     |_ ThymeleafConfiguration    thymeleaf 模板引擎配置(email 使用)
 |    |            |     |_ WebConfigurer    CorsFillter 可以在此处配置
 |    |            |
 |    |            |
@@ -64,46 +66,57 @@
 |    |            |     |
 |    |            |     |_ oauth2
 |    |            |     |     |_ CookieCollection    操作 Cookie 
-|    |            |     |     |_ CookiesHttpServletRequestWrapper    HttpServletRequest 请求的 Cookie 
-|    |            |     |     |_ CookieTokenExtractor    从 Cookie 中提取 token 
-|    |            |     |     |_ OAuth2AuthenticationService    用户登录获取 token 并刷新 token，在 token 是失效后清楚 cookie
+|    |            |     |     |_ CookiesHttpServletRequestWrapper    获取进入 Controller 层 HttpServletRequest 的 Cookie 
+|    |            |     |     |_ CookieTokenExtractor    从 Cookie 中提取 accessToken 
+|    |            |     |     |_ OAuth2AuthenticationService    用户登录获取 token 并刷新 token，在 token 是失效后清除 cookie，或在未失效前重新生成有效的 token
 |    |            |     |     |_ OAuth2CookieHelper    oauth2 cookie 操作
 |    |            |     |     |_ OAuth2Cookies    鉴权成功后，存储 token 到 cookie
-|    |            |     |     |_ OAuth2SignatureVerifierClient    oauth2 验证客户端
-|    |            |     |     |_ OAuth2TokenEndpointClient    从 uaa 获取 token 客户端
-|    |            |     |     |_ OAuth2TokenEndpointClientAdapter    适配器，从 uaa 获取 token 
+|    |            |     |     |_ OAuth2SignatureVerifierClient    oauth2 鉴权客户端
+|    |            |     |     |_ OAuth2TokenEndpointClient    从 uaa 获取、刷新 token 客户端
+|    |            |     |     |_ OAuth2TokenEndpointClientAdapter    适配器，实现从 uaa 获取 token 
 |    |            |     |     |_ UaaSignatureVerifierClient    从 uaa 获取公钥验证签名是否正确
 |    |            |     |     |_ UaaTokenEndpointClient    授权 token 权限 
 |    |            |     |
 |    |            |     |_ AuthoritiesConstants    用户权限的常量设置
 |    |            |     |
+|    |            |     |_ ManagerConstants    BackendManae 调用 GatewayUi ，GatewayUi 调用其他 Service 公开接口的 Key 和 Secret
+|    |            |     |
 |    |            |     |_ SecurityUtils    实用工具栏，提供获取当前用户的 principal、用户是否登录、当前用户角色
 |    |            |     |
 |    |            |     |_ SpringSecurityAuditorAware
+|    |            |     
 |    |            |2.模块组要功能
 |    |            |__ service    业务逻辑类
+|    |            |     |
+|    |            |     |_ captcha
+|    |            |     |    |_ geetest   Geetest 验证
+|    |            |     |    |_ CaptchaService   图形验证码
+|    |            |     |
 |    |            |     |_ email    邮件模板服务
-|    |            |     |    |_ MailService    根据 type 发送不同的邮件
+|    |            |     |    |_ MailService    根据 emailType 发送不同的邮件
 |    |            |     |    
 |    |            |     |_ kyc 
-|    |            |     |    |_ KycVerification    
-|    |            |     |    |_ KycVerificationChina    当用户国家为China (中国)时，调用阿里云 API
+|    |            |     |    |_ ALiYunService    阿里云 OCR 服务
+|    |            |     |    |_ KycVerification    KYC 认证状态，根据配置文件级别的国家代码审核
+|    |            |     |    |_ KycVerificationChina    当用户国家为 86 时，调用阿里云 OCR 服务
 |    |            |     |    |_ KycVerificationService    KYC 服务
 |    |            |     |       
 |    |            |     |_ multi.thread    多线程
-|    |            |     |        |_ ALiYunOssMultiThread    oss 文件分片多线程
-|    |            |     |        |_ ALiYunOssUploadService    oss 文件分片多线程上传（0.5M 一片）
+|    |            |     |        |_ ALiYunOssMultiThread   阿里云 oss 文件分片多线程
+|    |            |     |        |_ ALiYunOssUploadService    阿里云 oss 文件分片多线程上传（0.5M 一片）
+|    |            |     |        |_ AwsOssService            亚马逊 s3
+|    |            |     |        |_ OssService       OSS 抽象类，根据配置文件 type 值决定使用哪一种服务
 |    |            |     |   
 |    |            |     |_ rate 
+|    |            |     |    |_ CoinMarketCapLoaderService
 |    |            |     |    |_ CoinMarketCapService    获取实时汇率，每三分钟获取一次，并更新数据
 |    |            |     |
 |    |            |     |_ sms 
-|    |            |     |    |_ MultiSMS       
+|    |            |     |    |_ MultiSMS     SMS 父类    
 |    |            |     |    |_ ALiYunSMS    阿里云短信发送（当用户手机号 +86 开头，自动调用）（前提 config 必须配置+86）
 |    |            |     |    |_ NexmoSMS    国外短信服务商
 |    |            |     |    |_ TwilioSMS    国外短信服务商（当用户不是 +86 时，获取该实例。）
 |    |            |     |    |_ SendSmsService    短信服务，此处获取实例
-|    |            |     |    |_ ALiYunAppService    阿里云 C1 身份、驾证 API
 |    |            |     |     
 |    |            |     |_ MapiAccountService    创建底层账户    
 |    |            |
@@ -112,8 +125,12 @@
 |    |                  |    |_ decode
 |    |                  |    |  |_ ChangePassFilter    密码相关的 Base64 解密，因为复杂暂时不适用，直接在 UAA 解密。
 |    |                  |    |
+|    |                  |    |_ manager
+|    |                  |    |  |_ ManagerFilter  backendManage 调用 GatewayUi 公开接口的解析 Filter
+|    |                  |    |
 |    |                  |    |_ uaa 
-|    |                  |    |  |_ CreateUserPostFilter    用户注册自动创建底层账户，并发送注册成功邮件。
+|    |                  |    |  |_ ActivateUserPostFilter  Link 方式激活账户使用该 Filter，在用户激活成功后自动创建底层账户，并发送邮件
+|    |                  |    |  |_ CreateUserPostFilter    Key 方式注册自动创建底层账户，并发送注册成功邮件。
 |    |                  |    |  |_ PreFilter    过滤 /auth/user 的 uri ，转发到 uaa 
 |    |                  |    |  |_ RecordIPPostFilter    用户登录后，获取用户 IP 并记录
 |    |                  |    |  
@@ -124,16 +141,19 @@
 |    |                  |   |_ errors    API异常
 |    |                  |   |_ util    工具包
 |    |                  |       |_ ALiYunAppHttpUtil    阿里云 API HttpUtil 调用专用工具   
-|    |                  |       |_ CaptchaUtil    图形验证码生产工具
+|    |                  |       |_ CryptoHttpEntityUtil    调用加密接口封装 HttpEntity 工具类
+|    |                  |       |_ DeviceUtil    获取登录设备工具类
 |    |                  |       |_ GoogleAuthenticatorUtil    TOTP 算法，生产 GA 秘钥、验证秘钥
-|    |                  |       |_ HeaderUtil    header 工具
-|    |                  |       |_ HttpEntityUtil    restTemplate 调用其他模块，使用 exchange 加入鉴权、传输数据工具
+|    |                  |       |_ HeaderUtil    封装 HttpHeader 工具类
+|    |                  |       |_ HttpEntityUtil    restTemplate 调用其他模块，使用 exchange 加入鉴权、传输数据工具类
 |    |                  |       |_ ImgPath2Base64Util    图片编解码 base64 工具
 |    |                  |       |_ IPUtil    获取 IP 地址工具（查询地址后期配置抽离）
 |    |                  |       |_ PaginationUtil    分页工具
 |    |                  |       |_ QRCodeUtil    二维码工具
 |    |                  |       |_ RandomUtil    random 工具
-|    |                  |       |_ StringConvertUtil    string 工具，目前主要处理 img 、url 路径问题 
+|    |                  |       |_ RedisUtil     Redis 获取自增、设置自增失效时间工具类
+|    |                  |       |_ StringConvertUtil    String  工具，目前主要处理 img 、url 路径问题 
+|    |                  |       |_ SunBase64Util    Base64 加解密工具类
 |    |                  |
 |    |                  |
 |    |                  |_ vm    数据视图模型
@@ -159,7 +179,6 @@
 |    |      |    |      |_ changelog
 |    |      |    |      |_ 000000000000_initial_schema.xml    项目初始文件   
 |    |      |    |_ bootstrap.yml     根配置文件 
-|    |      |    |_ bootstrap-prod.yml     根配置生产环境文件 
 |    |      | 
 |    |      |_ i18n   国际化配置文件                       
 |    |      |_ mails    邮件发送 html 模板
