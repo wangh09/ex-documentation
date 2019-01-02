@@ -101,7 +101,7 @@
 |    |            |     |    |_ KycVerificationChina    当用户国家为 86 时，调用阿里云 OCR 服务
 |    |            |     |    |_ KycVerificationService    KYC 服务
 |    |            |     |       
-|    |            |     |_ multi.thread    多线程
+|    |            |     |_ object.storage    多线程
 |    |            |     |        |_ ALiYunOssMultiThread   阿里云 oss 文件分片多线程
 |    |            |     |        |_ ALiYunOssUploadService    阿里云 oss 文件分片多线程上传（0.5M 一片）
 |    |            |     |        |_ AwsOssService            亚马逊 s3
