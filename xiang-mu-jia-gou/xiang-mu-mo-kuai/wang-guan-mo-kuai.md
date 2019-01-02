@@ -81,7 +81,7 @@
 |    |            |     |
 |    |            |     |_ ManagerConstants    BackendManae 调用 GatewayUi ，GatewayUi 调用其他 Service 公开接口的 Key 和 Secret
 |    |            |     |
-|    |            |     |_ SecurityUtils    实用工具栏，提供获取当前用户的 principal、用户是否登录、当前用户角色
+|    |            |     |_ SecurityUtils    Securrity 工具类，提供获取当前用户的 principal、用户是否登录、当前用户角色
 |    |            |     |
 |    |            |     |_ SpringSecurityAuditorAware
 |    |            |     
