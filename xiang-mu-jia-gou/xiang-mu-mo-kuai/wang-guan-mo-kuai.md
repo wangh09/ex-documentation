@@ -48,7 +48,7 @@
 |    |            |__ domain    对应于数据库的实体类
 |    |            |     |_ enumeration    枚举类
 |    |            |     |_ AbstractAuditingEntity    复用类，继承该类将自动在事件生命周期自动执行相关操作。
-|    |            |     |_ PersistentAuditEvent    记录相关网站操作事件
+|    |            |     |_ PersistentAuditEvent    记录相关网站事件
 |    |            |
 |    |            |__ gateway    Gateway相关配置
 |    |            |     |_ accesscontrol    
@@ -56,7 +56,7 @@
 |    |            |     |_ ratelimiting
 |    |            |     |      |_ RateLimitingFilter    自定义增强Zuul过滤器，用于限制对微服务端的次数访问
 |    |            |     |_ responserewriting
-|    |            |            |_ SwaggerBasePathRewritingFilter    自定义微服务Swagge基本路径               
+|    |            |            |_ SwaggerBasePathRewritingFilter   Swagger 过滤器，重写微服务 URL
 |    |            |
 |    |            |
 |    |            |__ repository    Spring Data JPA 的CRUD接口，自定义查询在该接口定义。
