@@ -64,23 +64,16 @@ application:
 
 * **账户流程：**
 
-```
-                              |-----------|    
-                              |  Gateway  | 1
-                              |___________|              
-                                   |
-                                   |3
-         ..........................|..................................                                                                        
-                    |                              |
-                    |4                             |
-                    |                              | 2
-                |-------|                      |-------|      
-                |  Mapi |                      |  Uaa  |   
+![](/assets/用户注册流程图.png)
 
-  1:用户通过 Gateway 调用 Uaa 注册用户
-  2:Uaa 创建应用层账户，返回 userId
-  3:Gateway Filter 监听到 userId，传入 userId 异步远程调用 Mapi，返回结果正常，调用 Email服务，发送邮件。
-  4:Mapi 根据业务层 userId，创建对应的底层账户 accountId
+```
+用户通过 Gateway网关注册，UAA 用户中心会读取 Git 配置中心，根据注册方式是 Key 还是 Link 进行不同处理。
+1．注册方式是Key，业务层用户直接激活。在返回数据时，被Gateway网关的后置过滤器 CreateUserFilter 拦截，创建底层账户，
+调用邮件服务发送欢迎邮件。如果底层服务挂掉，则提示用户异常，联系网站修复账户的完整性。
+2．注册方式是Link，用户未激活状态，并设置 ActivationKey。在返回数据时，被Gateway网关的后置过滤器 CreateUserFilter 拦截，
+调用邮件服务发送激活链接邮件（发送邮件前Gateway网关会请求 UAA 服务获取当前用户的 ActivationKey 设置到邮件链接内），
+当用户点击邮件链接激活业务层用户后，被Gateway网关的后置过滤器 ActivateUserFilter拦截，创建底层账户，
+再次调用邮件服务发送欢迎邮件。如果底层服务挂掉，则提示用户异常，联系网站修复账户的完整性。
 ```
 
 * **参数说明：**
@@ -120,10 +113,13 @@ GET    https://localhost:8080/auth/user/activate?key={key}
 * **参数说明：**
   * String **key  （20 位激活码）**
 * **返回参数说明：**
-  * REGISTER\_SUCCESS  **注册成功且已激活（业务层账户、底层交易账户同时注册成功）** 
+
+  * REGISTER\_SUCCESS  **注册成功且已激活（业务层账户、底层交易账户同时注册成功）**
 
   * REGISTER\_FAILED **注册成功，底层账户创建失败（需要提醒用户联系网站管理员修复账号）**
+
   * REGISTER\_EXCEPTION** 注册异常（网站配置问题，提示用户联系网站）**
+
 * **返回结果：**
 
 ```
