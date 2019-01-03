@@ -1,10 +1,10 @@
-#### 1.获取挂单管理首页统计
+#### 1.获取盘口查询首页统计
 
 ```
-GET    http://localhost:8080/manager/order/list
+GET    http://localhost:8080/manager/handicap/list
 ```
 
-* **接口说明：获取挂单管理首页统计**
+* **接口说明：获取盘口查询首页统计**
 * **参数说明：**
 
 * **返回结果：**
@@ -23,7 +23,7 @@ GET    http://localhost:8080/manager/order/list
     "sellDealAmount": 26334.0001,
     "sellTotal": 3019.60007179,
     "sellDealTotal": 41256.90008179,
-    "createAt": 1546498864210
+    "createAt": 1546504264298
   },
   {
     "symbol": "ZEC_BTC",
@@ -37,26 +37,29 @@ GET    http://localhost:8080/manager/order/list
     "sellDealAmount": 713.1,
     "sellTotal": 231.68515255,
     "sellDealTotal": 231.68515255,
-    "createAt": 1546498864214
+    "createAt": 1546504264302
   }
 ]
 ```
 
 * **异常情况：无**
 
-#### 2.获取挂单管理统计详情
+#### 2.获取盘口查询统计详情
 
 ```
-GET    http://localhost:8080/manager/order/page
+GET    http://localhost:8080/manager/handicap/page
 ```
 
-* **接口说明：获取挂单管理统计详情**
+* **接口说明：获取盘口查询统计详情**
 * **参数说明：**
 
   * Long businessId : 业务层用户ID
   * String symbol : 币对
-  * String type : 默认查询全部
+  * String type : ALL \(默认查询全部\)
+  * String status : 订单状态（ALL,SEQUENCED,PARTIAL\_FILLED）
+
   * Integer page : 1
+
   * Integer size : 10
   * Long startTime : 开始时间\(可选\)
   * Long endTime : 结束时间\(可选\)
@@ -67,12 +70,12 @@ GET    http://localhost:8080/manager/order/page
 {
   "pageNum": 1,
   "pageSize": 10,
-  "size": 10,
+  "size": 2,
   "orderBy": null,
   "startRow": 1,
-  "endRow": 10,
-  "total": 53,
-  "pages": 6,
+  "endRow": 2,
+  "total": 2,
+  "pages": 1,
   "list": [
     {
       "id": 100176,
@@ -89,49 +92,24 @@ GET    http://localhost:8080/manager/order/page
       "price": 5,
       "amount": 2,
       "filledAmount": 0,
-      "fee": 0,
+      "fee": null,
       "triggerOn": null,
       "features": 0,
       "status": "SEQUENCED",
-      "averagePrice": 0,
+      "averagePrice": null,
       "businessId": 11114,
       "email": null
     }
   ],
   "firstPage": 1,
   "prePage": 0,
-  "nextPage": 2,
-  "lastPage": 6,
+  "nextPage": 0,
+  "lastPage": 1,
   "isFirstPage": true,
-  "isLastPage": false,
+  "isLastPage": true,
   "hasPreviousPage": false,
-  "hasNextPage": true
+  "hasNextPage": false
 }
-```
-
-* **异常情况：400 币对无效**
-
-#### 3.导出挂单管理统计详情
-
-```
-GET    http://localhost:8080/manager/order/export/csv
-```
-
-* **接口说明：导出挂单管理统计详情**
-* **参数说明：**
-
-  * Long businessId : 业务层用户ID
-  * String symbol : 币对
-  * String type : 默认查询全部
-  * Integer page : 1
-  * Integer size : 10
-  * Long startTime : 开始时间\(可选\)
-  * Long endTime : 结束时间\(可选\)
-
-* **返回结果：**
-
-```
-
 ```
 
 * **异常情况：400 币对无效**
