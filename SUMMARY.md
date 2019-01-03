@@ -86,7 +86,7 @@
     * [基本信息](shi-yong-wen-dang/jiao-661308-xi-tong/hou-tai-yong-hu-guan-li/yong-hu-ji-ben-xin-xi.md)
     * [角色与权限](shi-yong-wen-dang/jiao-661308-xi-tong/hou-tai-yong-hu-guan-li/jiao-se-yu-quan-xian.md)
   * 资产管理
-    * 系统账户管理
+    * [系统账户管理](shi-yong-wen-dang/jiao-661308-xi-tong/xi-tong-zhang-hu-guan-li.md)
     * 冷钱包管理
     * 系统操作日志
 * [相关逻辑](shi-yong-wen-dang/jiao-661308-xi-tong/xiang-guan-luo-ji.md)
