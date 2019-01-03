@@ -94,45 +94,87 @@ POST    http://localhost:8080/asset/system/account/balance
 
 * **异常情况：无**
 
-
-
 #### 3.获取系统账户详情
 
 ```
-POST    http://localhost:8080/asset/account/spot
+GET    http://localhost:8080/asset/account/spot
 ```
 
 * **接口说明：获取系统账户详情**
 * **参数说明：**
 
-  * **Long \[ \] ids**
+* **返回结果：**
+
+```
+{
+  "asset": [
+    {
+      "id": 110044,
+      "createdAt": 1545378993384,
+      "updatedAt": 1546090449878,
+      "userId": 108,
+      "currency": "ETH",
+      "type": "SPOT_AVAILABLE",
+      "balance": 0.48,
+      "rate": 0.03923652
+    }
+  ],
+  "debt": [
+    {
+      "id": 109027,
+      "createdAt": 1544584038358,
+      "updatedAt": 1546085245606,
+      "userId": 104,
+      "currency": "ETH",
+      "type": "SPOT_AVAILABLE",
+      "balance": -68.54793277635564,
+      "rate": 0.03923652
+    }
+  ]
+}
+```
+
+* **异常情况：无**
+
+
+
+#### 4.获取系统账户详情
+
+```
+POST    http://localhost:8080/asset/transfer/{fromUserId}/{toUserId}/{currency}/{amount}
+```
+
+* **接口说明：获取系统账户详情**
+* **参数说明：**
 
 * **返回结果：**
 
 ```
 {
-  "103": {
-    "id": 103,
-    "canSignin": false,
-    "canTrade": false,
-    "canWithdraw": false,
-    "createdAt": 1543991766276,
-    "level": 0,
-    "type": "ASSET",
-    "updatedAt": 1543991766276,
-    "balance": "-10113796.2893611451682473418213321600"
-  },
-  "104": {
-    "id": 104,
-    "canSignin": false,
-    "canTrade": false,
-    "canWithdraw": false,
-    "createdAt": 1543991766276,
-    "level": 0,
-    "type": "DEBT",
-    "updatedAt": 1543991766276,
-    "balance": "-2.69476867193199266369520000"
-  }
+  "asset": [
+    {
+      "id": 110044,
+      "createdAt": 1545378993384,
+      "updatedAt": 1546090449878,
+      "userId": 108,
+      "currency": "ETH",
+      "type": "SPOT_AVAILABLE",
+      "balance": 0.48,
+      "rate": 0.03923652
+    }
+  ],
+  "debt": [
+    {
+      "id": 109027,
+      "createdAt": 1544584038358,
+      "updatedAt": 1546085245606,
+      "userId": 104,
+      "currency": "ETH",
+      "type": "SPOT_AVAILABLE",
+      "balance": -68.54793277635564,
+      "rate": 0.03923652
+    }
+  ]
 }
 ```
 
