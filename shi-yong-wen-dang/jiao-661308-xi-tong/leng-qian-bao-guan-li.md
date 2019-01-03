@@ -224,8 +224,6 @@ POST    http://localhost:8080/asset/withdraw/requests
 
 * **异常情况：400 币种无效  地址无效 数量不合法**
 
-
-
 #### 7.获取指定币种提现规则
 
 ```
@@ -256,8 +254,6 @@ GET    http://localhost:8080/asset/withdraw/rule/{currency}
 ```
 
 * **异常情况：400 币种无效**
-
-
 
 #### 8.获取指定币种提现记录
 
@@ -316,12 +312,9 @@ GET    http://localhost:8080/asset/withdraw/log/{currency}
   "hasPreviousPage": false,
   "hasNextPage": true
 }
-
 ```
 
 * **异常情况：400 币种无效**
-
-
 
 #### 9.获取冷钱包用户详情
 
