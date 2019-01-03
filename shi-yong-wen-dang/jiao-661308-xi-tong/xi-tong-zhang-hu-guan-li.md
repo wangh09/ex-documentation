@@ -136,46 +136,24 @@ GET    http://localhost:8080/asset/account/spot
 
 * **异常情况：无**
 
-
-
-#### 4.获取系统账户详情
+#### 4.系统用户间转账
 
 ```
 POST    http://localhost:8080/asset/transfer/{fromUserId}/{toUserId}/{currency}/{amount}
 ```
 
-* **接口说明：获取系统账户详情**
+* **接口说明：**系统用户间转账指定币种指定金额
 * **参数说明：**
+
+  * Long fromUserId : 转出用户ID
+  * Long toUserId : 转入用户ID
+  * String currency : 币种
+  * BigDecimal amount : 金额
 
 * **返回结果：**
 
 ```
-{
-  "asset": [
-    {
-      "id": 110044,
-      "createdAt": 1545378993384,
-      "updatedAt": 1546090449878,
-      "userId": 108,
-      "currency": "ETH",
-      "type": "SPOT_AVAILABLE",
-      "balance": 0.48,
-      "rate": 0.03923652
-    }
-  ],
-  "debt": [
-    {
-      "id": 109027,
-      "createdAt": 1544584038358,
-      "updatedAt": 1546085245606,
-      "userId": 104,
-      "currency": "ETH",
-      "type": "SPOT_AVAILABLE",
-      "balance": -68.54793277635564,
-      "rate": 0.03923652
-    }
-  ]
-}
+Boolean.TRUE
 ```
 
 * **异常情况：无**
