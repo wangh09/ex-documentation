@@ -139,7 +139,7 @@ GET    http://localhost:8080/asset/account/spot
 #### 4.系统用户间转账
 
 ```
-POST    http://localhost:8080/asset/transfer/{fromUserId}/{toUserId}/{currency}/{amount}
+POST    http://localhost:8080/asset/users/transfer/{fromUserId}/{toUserId}/{currency}/{amount}
 ```
 
 * **接口说明：**系统用户间转账指定币种指定金额
