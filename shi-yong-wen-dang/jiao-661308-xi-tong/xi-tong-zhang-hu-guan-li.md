@@ -158,27 +158,5 @@ Boolean.TRUE
 
 * **异常情况：400 币种无效，数量不合法**
 
-#### 5.系统用户间转账
-
-```
-POST    http://localhost:8080/asset/transfer/{fromUserId}/{toUserId}/{currency}/{amount}
-```
-
-* **接口说明：**系统用户间转账指定币种指定金额
-* **参数说明：**
-
-  * Long fromUserId : 转出用户ID
-  * Long toUserId : 转入用户ID
-  * String currency : 币种
-  * BigDecimal amount : 金额
-
-* **返回结果：**
-
-```
-Boolean.TRUE
-```
-
-* **异常情况：400 币种无效，数量不合法**
-
 
 
