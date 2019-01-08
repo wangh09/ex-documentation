@@ -55,7 +55,7 @@ GET    http://localhost:8080/asset/system/users
 #### 2.获取系统用户账户余额
 
 ```
-POST    http://localhost:8080/asset/system/account/balance
+GET    http://localhost:8080/asset/system/account/balance/{ids}
 ```
 
 * **接口说明：获取系统用户账户余额**
