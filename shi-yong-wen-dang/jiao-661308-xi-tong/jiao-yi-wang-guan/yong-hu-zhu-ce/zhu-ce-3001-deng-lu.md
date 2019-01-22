@@ -33,13 +33,13 @@ true / false
 
 * **异常情况：404  邮件格式不正确**
 
-#### 3.使用 Email 注册用户 （权限开放）
+#### 3.使用 Email、Mobile 注册用户 （权限开放）
 
 ```
 POST    http://localhost:8082/auth/user/register
 ```
 
-* **接口使用说明：**
+* **接口使用说明：（手机注册只支持 KEY 激活方式）**
   * **Gateway 和 UAA 的配置必须保持一致**
   * **activationType 为 key 时，使用邮件验证码激活逻辑。（业务层创建账户时，自动创建底层交易账户）**
   * **activationType 为 link 时，使用邮件激活链接激活逻辑。（业务层账户激活成功，创建底层交易账户）**
@@ -102,7 +102,9 @@ application:
 “REGISTER_SUCCESS”
 ```
 
-* **异常情况：500  邮箱已存在、密码长度不符合规则**
+* **异常情况：**
+  * **500  邮箱已存在、密码长度不符合规则**
+  * **410  手机号已绑定多个账户，不允许注册**
 
 #### 4.用户点击邮件内的 Link 激活（权限开放，activationType 配置为 link 时启用该接口）
 
@@ -156,6 +158,8 @@ POST    http://localhost:8082/auth/user/login/status
 Web -->|       | 
        | Wrong |                   |--> { "dayLimit": 10, "dayExpire": 600, "dayUsedLimit": 0, "status": "EXCEPTION" }
        |       |---> EXCEPTION --> |
+       |       |                   |--> { "dayLimit": 10, "dayExpire": 600, "dayUsedLimit": 0, "status": "MULTI_ACCOUNT" }
+       |       |                   |  
        |----- >|                   |--> { "dayLimit": 10, "dayExpire": 600, "dayUsedLimit": 0, "status": "NOT_ACTIVATED" }
                |
                |---> LIMIT { "dayLimit": 10, "dayExpire": 390, "dayUsedLimit": 10, "status": "LIMIT" }
