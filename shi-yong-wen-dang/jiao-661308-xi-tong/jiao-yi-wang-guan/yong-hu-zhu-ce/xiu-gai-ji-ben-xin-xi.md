@@ -233,7 +233,7 @@ POST    http://localhost:8082/auth/user/records-address
 * **接口说明：**默认自动在 login-callback 接口自动调用。
 * **异常情况：500 当前用户没有登录，调用该接口（正常逻辑不会出现）**
 
-#### 8.根据 Token 内的 Principal （coreId）获取用户信息
+#### 8.根据 Token 内的 Principal （coreId）获取用户信息（服务间内部加密调用）
 
 ```
 GET    http://localhost:8082/auth/user/principal/{principal}
