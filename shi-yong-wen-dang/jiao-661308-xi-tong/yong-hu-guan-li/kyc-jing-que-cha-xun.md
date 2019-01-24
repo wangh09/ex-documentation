@@ -154,7 +154,15 @@ GET    http://localhost:8080/user/kyc/seclctor/{type}
 }
 ```
 
-#### 3.查询KYC 用户详细信息
+#### 3. 根据 KYC 结果导出用户、KYC、资产信息
+
+```
+GET    http://localhost:8080/user/kyc/export/csv/{type}
+```
+
+* **接口说明说明：具体参数参考 2**
+
+#### 4.查询KYC 用户详细信息
 
 ```
 GET    http://localhost:8080/user/kyc/details/{userId}
@@ -190,7 +198,7 @@ GET    http://localhost:8080/user/kyc/details/{userId}
 
 * **异常情况：无**
 
-#### 4.根据 userId 数组查询用户
+#### 5.根据 userId 数组查询用户
 
 ```
 GET    http://localhost:8080/user/ids/1,2,3,4,5
