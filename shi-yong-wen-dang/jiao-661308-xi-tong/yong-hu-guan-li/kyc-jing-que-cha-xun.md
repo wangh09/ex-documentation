@@ -82,7 +82,79 @@ B: http://localhost:8080/user/kyc/search?[type={type}][&userId={userId}][&email=
 
 * **异常情况：无**
 
-#### 2.查询KYC 用户详细信息
+#### 2. KYC 综合查询
+
+```
+GET    http://localhost:8080/user/kyc/seclctor/{type}
+```
+
+* **参数说明：**
+  * String **type:**
+    * **certificate 只支持分页，不支持 userId、email、mobile 搜索。排序使用 User 的 created\_date 等类似字段。**
+    * **no-certificate 只支持分页，不支持 userId、email、mobile 搜索。排序使用 User 的 create\_date 等类似字段。**
+    * **user 支持分页，支持 userId、email、mobile 搜索。排序使用 User 的 created\_date 等类似字段。**
+    * **kyc 支持分页，支持 userId、email、mobile 搜索。排序使用 KYC 的 created\_date 等类似字段。**
+    * **status-level  支持分页，支持 userId、email、mobile 搜索。排序使用 KYC 的 created\_date 等类似字段。**
+  * **Long userId ：**支持精确查询
+  * **String mobile : **支持模糊搜索
+  * **String email ：**支持模糊搜索
+  * **String kycCondition ：**type=statis-level 时必填，其他tape 不支持。kycCondition 可以是 KYC 状态 PENDING、PASSED、REJECETED，也可以是 KYC 级别。
+  * **Long strat**
+  * **Long end**
+  * **Pageable**
+* **返回结果：**
+
+```
+{
+  "content": [
+    {
+      "id": 11122,
+      "email": "bifispring@gmail.com",
+      "mobile": "+86-17610016050",
+      "activated": true,
+      "createdDate": "2018-10-12T11:40:26Z",
+      "countryCode": null,
+      "level": null,
+      "status": null,
+      "data": null,
+      "extraData": null,
+      "audit": null,
+      "description": null,
+      "extension": null,
+      "kycCreatedDate": null,
+      "kycLastModifiedDate": null,
+      "authorityName": [
+        "ROLE_ADMIN"
+      ]
+    },
+    .......
+  ],
+  "size": 5,
+  "totalElements": 2,
+  "pageable": {
+    "sort": {
+      "sorted": false,
+      "unsorted": true
+    },
+    "offset": 0,
+    "pageSize": 5,
+    "pageNumber": 0,
+    "unpaged": false,
+    "paged": true
+  },
+  "last": true,
+  "totalPages": 1,
+  "sort": {
+    "sorted": false,
+    "unsorted": true
+  },
+  "first": true,
+  "numberOfElements": 2,
+  "number": 0
+}
+```
+
+#### 3.查询KYC 用户详细信息
 
 ```
 GET    http://localhost:8080/user/kyc/details/{userId}
