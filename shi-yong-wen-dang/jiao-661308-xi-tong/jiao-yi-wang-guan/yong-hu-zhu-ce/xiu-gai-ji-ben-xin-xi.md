@@ -3,7 +3,7 @@
 #### 1.绑定、更新手机号码
 
 ```
-POST    http://localhost:8082/auth/user/mobile
+POST    http://localhost:8082/auth/user/info
 ```
 
 * **参数：**只有 String **mobile **是必传参数，其他的可以根据后期网站实际需求传值
@@ -15,6 +15,7 @@ POST    http://localhost:8082/auth/user/mobile
   "langKey": "string",            
   "lastName": "string",   
   "mobile": "string",           [ +86-138******** ]   
+  "email" : "admin@admin.com",
   "areaCode": "string"          [ +86 ]   
 }
 ```
@@ -47,6 +48,8 @@ POST    http://localhost:8082/auth/user/mobile
 * **异常情况：**
 
   * **400  用户绑定手机时，手机号码已经存在**
+
+  * **410 多账号绑定同一手机号，不支持更新**
 
   * **500 当前用户没有登录，调用该接口（正常逻辑不会出现）**
 
@@ -83,12 +86,13 @@ true / false
 POST    http://localhost:8082/auth/user/reset-pass
 ```
 
-* **参数：**
+* **参数说明：**
+  * **String login : 支持邮箱、手机**
 
 ```
 {
   "pass":"123456789",
-  "email":"admin@localhost.com"
+  "login":"admin@localhost.com"
 }
 ```
 
@@ -101,6 +105,7 @@ true / false
 * **异常情况：**
 
   * **400 密码不符合长度规则、传入邮件格式不对**
+  * **410 多账号绑定同一手机号，不支持重置密码**
 
 #### 4.用户登录历史
 
@@ -227,6 +232,17 @@ POST    http://localhost:8082/auth/user/records-address
 
 * **接口说明：**默认自动在 login-callback 接口自动调用。
 * **异常情况：500 当前用户没有登录，调用该接口（正常逻辑不会出现）**
+
+#### 8.根据 Token 内的 Principal （coreId）获取用户信息
+
+```
+GET    http://localhost:8082/auth/user/principal/{principal}
+```
+
+* **场景说明：**
+  * **已登录用户，在后台被冻结后，调用其他接口，需要使用该接口确定最新的用户权限。**
+* **返回结果：**
+  * **同 user/info **
 
 
 

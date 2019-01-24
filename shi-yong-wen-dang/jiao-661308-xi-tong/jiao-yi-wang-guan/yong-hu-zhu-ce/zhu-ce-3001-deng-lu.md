@@ -18,20 +18,22 @@ GET    http://localhost:8082/auth/user/activationType
 key / link
 ```
 
-#### 2.检查邮箱是否可以注册（权限开放）
+#### 2.检查邮箱（手机）是否可以注册（权限开放）
 
 ```
-GET    http://localhost:8082/auth/user/email/check/{email}
+GET    http://localhost:8082/auth/user/login/check/{login}
 ```
 
-* String **email : 支持 a\_b-.@x-y.com 类似格式**
+* String **login : 支持邮箱、手机**
 * **返回结果：true 已经存在，不能注册，false 可以注册**
 
 ```
 true / false
 ```
 
-* **异常情况：404  邮件格式不正确**
+* **异常情况：**
+  * **404  邮件格式不正确**
+  * **410 多账号绑定同一手机号，不支持检查**
 
 #### 3.使用 Email、Mobile 注册用户 （权限开放）
 
@@ -40,6 +42,7 @@ POST    http://localhost:8082/auth/user/register
 ```
 
 * **接口使用说明：（手机注册只支持 KEY 激活方式）**
+  * **手机注册只支持激活方式为 key，因为无法发送激活邮件链接。**
   * **Gateway 和 UAA 的配置必须保持一致**
   * **activationType 为 key 时，使用邮件验证码激活逻辑。（业务层创建账户时，自动创建底层交易账户）**
   * **activationType 为 link 时，使用邮件激活链接激活逻辑。（业务层账户激活成功，创建底层交易账户）**
@@ -106,7 +109,7 @@ application:
   * **500  邮箱已存在、密码长度不符合规则**
   * **410  手机号已绑定多个账户，不允许注册**
 
-#### 4.用户点击邮件内的 Link 激活（权限开放，activationType 配置为 link 时启用该接口）
+#### 4.用户点击邮件内的 Link 激活（权限开放，activationType 配置为 link 时启用该加密接口）
 
 ```
 GET    https://localhost:8080/auth/user/activate?key={key}
