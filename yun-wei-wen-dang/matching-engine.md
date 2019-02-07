@@ -49,8 +49,8 @@ If you are using a private docker registry, you need to add the docker credentia
 * 3.1 Run the config server and test.
 
 ```
- kubectl apply -f secrets.yaml
- kubectl apply -f crypto-config.yaml
+ kubectl apply -f crypto-config/secrets.yaml
+ kubectl apply -f crypto-config/crypto-config.yaml
 ```
 
 Check the log of the server.
@@ -84,7 +84,7 @@ kubectl apply -f resource
 * Deploy and test the Api
 
 ```
-bash init-api.sh
+kubectl apply -f crypto-api/crypto-api.yaml
 ```
 
 The api will be exposed on the web, and three things need to be checked before proceed:
@@ -99,14 +99,14 @@ The api will be exposed on the web, and three things need to be checked before p
 
 The main currencies that are enabled in the hd-hot-wallet-\*.yml should be configured in the ex database. There are two ways to configure them:
 
-1. Put the keys in xpubkeys.json to CryptoApiSchemaBuilder.java and generate a corresponding init-ex.sql, then run the sql manually.
+1. Put the keys in xpubkeys.json to CryptoApiSchemaBuilder.java and generate a corresponding init-ex.sql, then run the sql manually to insert currency settings into database. \(Need source code\)
 
 2. Call the APIs to set them.
 
-3. Bring up the sending machine
+Then bring up the sending machine
 
 ```
- bash init-sending.sh
+ kubectl apply -f wallet-sending/wallet-sending.yaml
 ```
 
 * Check if the sending machine works correctly.
@@ -120,7 +120,8 @@ If everything goes well, the sending machine will start to query the blockchain 
 * Deploy the signing machine
 
 ```
-bash init-signing.sh
+cd wallet-signing && bash init-keys.sh
+kubectl apply -f wallet-signing.yaml
 ```
 
 Then check the logs to make sure no error occurs.
@@ -144,26 +145,24 @@ curl localhost:8100/init -d 'password=xxxx&ga=xxxx'
 If the Api starts up correctly, then the other parts should function as well. Bring up the other modules by running the scripts:
 
 ```
- bash init-match.sh
+ kubectl apply -f crypto-sequence/crypto-sequence.yaml
+ kubectl apply -f crypto-match/crypto-match-temp.yaml
+ kubectl apply -f crypto-clearing/crypto-clearing.yaml
+ kubectl apply -f crypto-quotation/crypto-quotation.yaml
+ kubectl apply -f crypto-notification/crypto-notification.yaml
 ```
 
 It should be pointed out that in production environments, the matching snapshots should be stored reliably, in which case the last line of the above script is supposed to be changed to use a local storage on the worker nodes or external storage, one can refer to Step-by-step Configuration for more information.
 
 After all the services startup, check the logs of the each module, there should be no error and no order related logs as well. There should be no data in the database except for the init data and the locks table.
 
-## 8. Expose the websocket
+## 8. Test the websocket
 
-websocket is the only service that needs to be exposed to the public in prod env.
-
-```
-bash init-ws.sh
-```
-
-Then you can test it through online test tools:
+websocket is the only service that needs to be exposed to the public in prod env, which is configured in crypto-notification.yaml. You can test it through online test tools to the url:
 
 ```
 ws://WS_URL/v1/market/?transport=websocket
 ```
 
-
+It works if connection succeeded.
 
