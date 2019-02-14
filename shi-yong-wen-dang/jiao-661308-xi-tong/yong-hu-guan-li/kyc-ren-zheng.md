@@ -40,6 +40,7 @@ GET    http://localhost:8080/user/kyc/list/status?page={page}&size={size}&sort=[
       "id": 5,
       "email": "32694110@qq.com",
       "mobile": "+86-17610016050",
+      "langKey": "zh-CN",
       "createdDate": "2018-09-08T15:53:01Z",
       "level": "normal",
       "status": "PASSED",
