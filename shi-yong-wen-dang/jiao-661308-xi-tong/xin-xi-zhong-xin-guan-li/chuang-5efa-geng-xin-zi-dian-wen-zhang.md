@@ -14,19 +14,19 @@ GET    http://localhost:8080/web-server/info/dict/node?[type={type}&][parent={pa
 
 | parent | 涵义 |
 | :--- | :--- |
-| about | 关于我们。包括：公司简介\(company-profile\)，团队介绍\(team-intro\)，加入我们\(join-us\) |
-| support | 用户支持。包括：用户协议\(user-agreement\)，法律声明\(legal-notices\)，隐私条款\(privacy-policy\) |
+| about-us | 关于我们。包括：公司简介\(company-profile\)，团队介绍\(team-intro\)，加入我们\(join-us\) |
+| cusotmer-support | 用户支持。包括：用户协议\(user-agreement\)，法律声明\(legal-notices\)，隐私条款\(privacy-policy\) |
 | follow-us | 关注我们 |
 | friendship | 友情链接 |
-| carousel | 首页轮播图 |
-| website-config | 网站配图。包括：注册、登录、修改密码页面配图 |
+| ex-carousel | 轮播图 |
+| ex-login-modules | 网站配图。包括：注册、登录、修改密码页面配图 |
 
 * **返回结果：**
 
 ```
 [
   {
-    "parent": "about",
+    "parent": "about-us",
     "extension": "",
     "lastModifiedDate": null,
     "lastModifiedBy": "admin",
@@ -103,7 +103,6 @@ POST    http://localhost:8080/web-server/info/dict
             "imgUrl": null,
             "status": 0,
             "order": 1,
-            "show": true,
             "description": "公告详情-上币公告",
             "extension": "上币公告"
         },
@@ -139,7 +138,6 @@ POST    http://localhost:8080/web-server/info/dict
             "imgUrl": null,
             "status": 0,
             "order": 1,
-            "show": true,
             "description": "公告详情-上币公告",
             "extension": "上币公告",
             "createdBy": "anonymousUser",
