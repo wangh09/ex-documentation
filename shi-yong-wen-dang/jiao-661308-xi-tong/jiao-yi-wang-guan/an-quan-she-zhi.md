@@ -201,7 +201,7 @@ GET    http://localhost:8082/security/email/send/{email}/{type}/{language}
 
 * **参数2：**String **type**
 
-  * **activationEmail  用户注册时，激活码**
+  * **activationKeyEmail、actovationLinkEmail （根据注册&登录的注册类型选择，当 type 为 Link 时，激活码只能激活一次）**
     * 邮件模板
       > 亲爱的[32694110@qq.com](mailto:32694110@qq.com)
       >
@@ -224,6 +224,10 @@ GET    http://localhost:8082/security/email/send/{email}/{type}/{language}
   * **withdrawEmail  用户提现验证码邮件**
 
   * **createApiEmail  用户创建 API 验证码邮件**
+
+  * **bindGAEmail 用户绑定 GA 验证码邮件**
+
+  * **resetGAEmail 用户重置 GA 验证码邮件**
 
 * **参数3：**String **language**
 
