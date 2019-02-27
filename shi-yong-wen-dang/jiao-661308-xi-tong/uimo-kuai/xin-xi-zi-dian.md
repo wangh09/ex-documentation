@@ -13,7 +13,7 @@
 | ex-footer-links | contract-us | zh-CN | true |  |  |  |  | 联系我们 |  |
 | ex-footer-links | friendship | zh-CN | true |  |  |  |  | 友情链接 |  |
 | ex-graphics | ex-carousel | zh-CN | true |  |  |  |  | 轮播图 |  |
-| ex-graphics | ex-login-modules | zh-CN | true |  |  |  |  | 法律声明 |  |
+| ex-graphics | ex-login-modules | zh-CN | true |  |  |  |  | 登录配图 |  |
 | ex-login-modules | login | zh-CN | true |  |  |  |  | 登录配图 |  |
 | ex-login-modules | register | zh-CN | true |  |  |  |  | 注册配图 |  |
 | ex-login-modules | forgot-pass | zh-CN | true |  |  |  |  | 忘记密码配图 |  |
