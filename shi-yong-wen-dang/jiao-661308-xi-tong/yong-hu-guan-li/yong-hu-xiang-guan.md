@@ -206,7 +206,46 @@ PUT    http://localhost:8080/user/info
 }
 ```
 
-#### 6.获取用户缓存的数据
+#### 6.重置用户安全相关
+
+```
+PUT    http://localhost:8080/user/security/reset
+```
+
+* **接口说明：**
+  * 修改用户GA秘钥、资金安全密码
+* **参数说明：**
+  * String **userId : **必传。（如果 userId 不存在，无返回结果）
+  * String **googleSecret : **如果重置，直接传 null
+  * String **currencyPassword ：**如果传值，则修改密码，不传默认使用原密码
+  * String **lastModifiedBy ：**当前操作的账号（如果不传，默认写入 system 作为操作人）
+* **参数：**
+
+```
+{
+  "userId": 11119
+  "googleSecret": null,
+  "currencyPassword": "123456",
+  "lastModifiedBy": "m-admin"
+}
+```
+
+* **返回参数：**
+
+```
+{
+  "id": 1,
+  "userId": 11119,
+  "googleSecret": null,
+  "currencyPassword": "$2a$10$3DeeM0njICVMo9wemF746O4307MZcdEwyiszqlssrJM9ZmudgWlaO",
+  "createdBy": "coreId_b5de420f3c8542b78c4a822270d7746b",
+  "createdDate": "2019-03-20T09:34:13Z",
+  "lastModifiedBy": "m-admin",
+  "lastModifiedDate": "2019-03-20T10:55:44Z"
+}
+```
+
+#### 7.获取用户缓存的数据
 
 ```
 GET    http://localhost:8080/user/redis/{email}
@@ -228,7 +267,7 @@ GET    http://localhost:8080/user/redis/{email}
 }
 ```
 
-#### 7.删除用户缓存
+#### 8.删除用户缓存
 
 ```
 DEL    http://localhost:8080/user/redis/{userId}
