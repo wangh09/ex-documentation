@@ -245,6 +245,8 @@ PUT    http://localhost:8080/user/security/reset
 }
 ```
 
+* **异常情况：无**
+
 #### 7.获取用户缓存的数据
 
 ```
