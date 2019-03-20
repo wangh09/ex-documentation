@@ -121,6 +121,7 @@ GET    http://localhost:8080/user/authority/list
 POST    http://localhost:8080/user/authority/set/{userId}
 ```
 
+* **接口说明：**用户缓存会清空
 * **参数说明：**
   * **Long userId**
   * **Set&lt;Authority&gt; （具体权限参考上个接口）**
@@ -213,7 +214,7 @@ PUT    http://localhost:8080/user/security/reset
 ```
 
 * **接口说明：**
-  * 修改用户GA秘钥、资金安全密码
+  * 修改用户GA秘钥、资金安全密码（用户缓存会清空）。
 * **参数说明：**
   * String **userId : **必传。（如果 userId 不存在，无返回结果）
   * String **googleSecret : **如果重置，直接传 null
