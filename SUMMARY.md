@@ -100,6 +100,7 @@
 ## Operations
 
 * [Introduction](yun-wei-wen-dang/bu-shu-shuo-ming.md)
+* [How To Build](yun-wei-wen-dang/how-to-build.md)
 * [System Requirements](yun-wei-wen-dang/system-requirements.md)
   * [Computation](yun-wei-wen-dang/system-requirements/computation.md)
   * [External Resources](yun-wei-wen-dang/system-requirements/external-resources.md)
